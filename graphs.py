@@ -16,13 +16,7 @@ Funciones:
 import requests
 import json
 import sqlite3
-import math
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.axes
-import matplotlib.gridspec as gridspec
-import mplcursors
-from itertools import accumulate
+
 
 
 def bar_graph_continent():
@@ -44,22 +38,8 @@ def bar_graph_continent():
 
     conn.commit()
     conn.close()
-
-    fig = plt.figure()
-    ax = fig.add_subplot()
-
-    ax.bar(row[0][1], row[0][0], label=f'{row[0][1]}')
-    ax.bar(row[1][1], row[1][0], label=f'{row[1][1]}')
-    ax.bar(row[2][1], row[2][0], label=f'{row[2][1]}')
-    ax.bar(row[3][1], row[3][0], label=f'{row[3][1]}')
-    ax.bar(row[4][1], row[4][0], label=f'{row[4][1]}')
     
-    ax.set_facecolor('whitesmoke')
-    ax.legend()
-
-    plt.show()
-
-    return
+    return row
 
 
 def bar_graph_continent_death():
@@ -82,21 +62,7 @@ def bar_graph_continent_death():
     conn.commit()
     conn.close()
 
-    fig = plt.figure()
-    ax = fig.add_subplot()
-
-    ax.bar(row[0][1], row[0][0], label=f'{row[0][1]}')
-    ax.bar(row[1][1], row[1][0], label=f'{row[1][1]}')
-    ax.bar(row[2][1], row[2][0], label=f'{row[2][1]}')
-    ax.bar(row[3][1], row[3][0], label=f'{row[3][1]}')
-    ax.bar(row[4][1], row[4][0], label=f'{row[4][1]}')
-    
-    ax.set_facecolor('whitesmoke')
-    ax.legend()
-
-    plt.show()
-
-    return
+    return row
 
 
 def ranking_table_graph():
@@ -174,31 +140,7 @@ def line_graph():
     conn.commit()
     conn.close()
 
-    africa_acc = list(accumulate([i[1] for i in row if i[2] == 'Africa']))
-    america_acc = list(accumulate([i[1] for i in row if i[2] == 'America']))
-    asia_acc = list(accumulate([i[1] for i in row if i[2] == 'Asia']))
-    europe_acc = list(accumulate([i[1] for i in row if i[2] == 'Europe']))
-    oceania_acc = list(accumulate([i[1] for i in row if i[2] == 'Oceania']))
-
-    week_year = [i[0] for i in row if i[2] == 'Africa']
-
-    fig = plt.figure()
-    ax = fig.add_subplot()
-
-    ax.plot(week_year, africa_acc, color='b', label='Africa')
-    ax.plot(week_year, america_acc, color='c', label='America')
-    ax.plot(week_year, asia_acc, color='g', label='Asia')
-    ax.plot(week_year, europe_acc, color='k', label='Europe')
-    ax.plot(week_year, oceania_acc, color='r', label='Oceania')
-    ax.set_facecolor('whitesmoke')
-    ax.set_ylabel("Cases of Covid-19")
-    ax.set_xlabel("Number of week")
-    plt.xticks(week_year, rotation ='vertical')
-
-    ax.legend()
-    plt.show()
-
-    return
+    return row
 
 
 def line_graph_death():
@@ -224,31 +166,7 @@ def line_graph_death():
     conn.commit()
     conn.close()
 
-    africa_acc = list(accumulate([i[1] for i in row if i[2] == 'Africa']))
-    america_acc = list(accumulate([i[1] for i in row if i[2] == 'America']))
-    asia_acc = list(accumulate([i[1] for i in row if i[2] == 'Asia']))
-    europe_acc = list(accumulate([i[1] for i in row if i[2] == 'Europe']))
-    oceania_acc = list(accumulate([i[1] for i in row if i[2] == 'Oceania']))
-
-    week_year = [i[0] for i in row if i[2] == 'Africa']
-
-    fig = plt.figure()
-    ax = fig.add_subplot()
-
-    ax.plot(week_year, africa_acc, color='b', label='Africa')
-    ax.plot(week_year, america_acc, color='c', label='America')
-    ax.plot(week_year, asia_acc, color='g', label='Asia')
-    ax.plot(week_year, europe_acc, color='k', label='Europe')
-    ax.plot(week_year, oceania_acc, color='r', label='Oceania')
-    ax.set_facecolor('whitesmoke')
-    ax.set_ylabel("Cases of Covid-19")
-    ax.set_xlabel("Number of the week")
-    plt.xticks(week_year, rotation ='vertical')
-
-    ax.legend()
-    plt.show()
-
-    return
+    return row
 
 
 def line_graph_per_country(country):
@@ -276,23 +194,4 @@ def line_graph_per_country(country):
     conn.commit()
     conn.close()
 
-    country_acc_cases = list(accumulate([i[1] for i in row]))
-    country_acc_death = list(accumulate([i[2] for i in row]))
-
-    week_year = [i[0] for i in row]
-
-    fig = plt.figure()
-    ax = fig.add_subplot()
-
-    ax.plot(week_year, country_acc_cases, color='b', label='cases')
-    ax.plot(week_year, country_acc_death, color='r', label='death')
-    ax.set_facecolor('whitesmoke')
-    ax.set_title(f'{country}')
-    ax.set_ylabel("Cases/Deaths of Covid-19")
-    ax.set_xlabel("Number of the week")
-    plt.xticks(week_year, rotation ='vertical')
-
-    ax.legend()
-    plt.show()
-
-    return
+    return row
