@@ -75,7 +75,7 @@ def ranking_table_graph():
     
     c.execute("""
             SELECT 
-            SUM(cases_weekly), countries_and_territories, 
+            countries_and_territories, SUM(cases_weekly),
             (SUM(cases_weekly)* 100 / (Select SUM(cases_weekly) From table_covid_world))
             FROM table_covid_world
             GROUP BY countries_and_territories
@@ -101,7 +101,7 @@ def ranking_table_graph_death():
     
     c.execute("""
             SELECT 
-            SUM(deaths_weekly), countries_and_territories, 
+            countries_and_territories, SUM(deaths_weekly), 
             (SUM(deaths_weekly)* 100 / (Select SUM(deaths_weekly) From table_covid_world))
             FROM table_covid_world
             GROUP BY countries_and_territories
@@ -180,9 +180,7 @@ def line_graph_per_country(country):
     c.execute("""
             SELECT 
             year_week,
-            SUM(cases_weekly),
-            SUM(deaths_weekly),
-            countries_and_territories
+            SUM(cases_weekly), SUM(deaths_weekly),
             FROM table_covid_world
             WHERE countries_and_territories LIKE ?
             GROUP BY year_week, countries_and_territories

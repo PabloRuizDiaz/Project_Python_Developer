@@ -23,9 +23,6 @@ import sys
 import base64
 # Librerias para graficos
 import matplotlib.pyplot as plt
-# import matplotlib.axes
-# import matplotlib.gridspec as gridspec
-# import mplcursors
 import matplotlib
 matplotlib.use('Agg')
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
@@ -81,9 +78,11 @@ def bar_graph_continent():
 
     img = io.BytesIO() # data can be kept as bytes in an in-memory buffer when we use the io module’s Byte IO operations.
     fig.savefig(img) # image is saved in the 'img' variable
-    FigureCanvas(fig).print_png(output)
+    FigureCanvas(fig).print_png(img)
     plt.close(fig)
+
     return Response(img.getvalue(), mimetype='image/png')
+
 
 
 @app.route('/bar_graph_continent_death')
@@ -104,23 +103,54 @@ def bar_graph_continent_death():
 
     img = io.BytesIO() # data can be kept as bytes in an in-memory buffer when we use the io module’s Byte IO operations.
     fig.savefig(img) # image is saved in the 'img' variable
-    FigureCanvas(fig).print_png(output)
+    FigureCanvas(fig).print_png(img)
     plt.close(fig)
-    return Response(img.getvalue(), mimetype='image/png')
 
+    return Response(img.getvalue(), mimetype='image/png')
+    
 
 @app.route('/ranking_table_graph')
 def ranking_table_graph():
     row = graphs.ranking_table_graph()
-    # falta armar la tabla
-    return render_template('index.html')
+    
+    val1 = ['Countries and Territories', 'Cases per week', 'Average (%)'] 
+    val2 = [[i[n] for n in range(3)] for i in row]
+    
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    ax.set_axis_off()
+
+    ax.table(cellText = val2, colLabels = val1, colColours =["palegreen"] * 10, cellLoc ='center', loc ='center')
+    ax.set_title('Tabla Top 10: Contagios por Pais') 
+    
+    img = io.BytesIO() # data can be kept as bytes in an in-memory buffer when we use the io module’s Byte IO operations.
+    fig.savefig(img) # image is saved in the 'img' variable
+    FigureCanvas(fig).print_png(img)
+    plt.close(fig)
+    
+    return Response(img.getvalue(), mimetype='image/png')
 
 
 @app.route('/ranking_table_graph_death')
 def ranking_table_graph_death():
     row = graphs.ranking_table_graph_death()
-    # falta armar la tabla
-    return render_template('index.html')
+    
+    val1 = ['Countries and Territories', 'Deaths per week', 'Average (%)'] 
+    val2 = [[i[n] for n in range(3)] for i in row]
+    
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    ax.set_axis_off()
+
+    ax.table(cellText = val2, colLabels = val1, colColours =["palegreen"] * 10, cellLoc ='center', loc ='center')
+    ax.set_title('Tabla Top 10: Contagios por Pais') 
+    
+    img = io.BytesIO() # data can be kept as bytes in an in-memory buffer when we use the io module’s Byte IO operations.
+    fig.savefig(img) # image is saved in the 'img' variable
+    FigureCanvas(fig).print_png(img)
+    plt.close(fig)
+    
+    return Response(img.getvalue(), mimetype='image/png')
 
 
 @app.route('/line_graph')
@@ -151,8 +181,9 @@ def line_graph():
     
     img = io.BytesIO() # data can be kept as bytes in an in-memory buffer when we use the io module’s Byte IO operations.
     fig.savefig(img) # image is saved in the 'img' variable
-    FigureCanvas(fig).print_png(output)
+    FigureCanvas(fig).print_png(img)
     plt.close(fig)
+    
     return Response(img.getvalue(), mimetype='image/png')
 
 
@@ -184,13 +215,14 @@ def line_graph_death():
     
     img = io.BytesIO() # data can be kept as bytes in an in-memory buffer when we use the io module’s Byte IO operations.
     fig.savefig(img) # image is saved in the 'img' variable
-    FigureCanvas(fig).print_png(output)
+    FigureCanvas(fig).print_png(img)
     plt.close(fig)
+    
     return Response(img.getvalue(), mimetype='image/png')
 
 
-@app.route('/line_graph_per_country')
-def line_graph_per_country(country):
+@app.route('/line_graph_per_country', methods=['GET', 'POST'])
+def line_graph_per_country(country='Argentina'):
     row = graphs.line_graph_per_country(country)
 
     country_acc_cases = list(accumulate([i[1] for i in row]))
@@ -212,8 +244,9 @@ def line_graph_per_country(country):
     
     img = io.BytesIO() # data can be kept as bytes in an in-memory buffer when we use the io module’s Byte IO operations.
     fig.savefig(img) # image is saved in the 'img' variable
-    FigureCanvas(fig).print_png(output)
+    FigureCanvas(fig).print_png(img)
     plt.close(fig)
+    
     return Response(img.getvalue(), mimetype='image/png')
 
 

@@ -83,19 +83,6 @@ def actualise_table_SQL():
         for j in i:
             group.append(i[j])    
         
-        # c.execute("""
-        #         IF NOT EXISTS
-        #             (SELECT * FROM table_covid_world 
-        #             WHERE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?))
-        #         BEGIN 
-        #             INSERT INTO table_covid_world 
-        #             (date_rep, year_week, cases_weekly, deaths_weekly, countries_and_territories,
-        #             geo_id, country_territory_Code, pop_data_2019, continent_exp, 
-        #             Cumulative_number_for_14_days_of_COVID_19_cases_per_100000)
-        #             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        #         END;
-        #         """, [group, group])
-        
         c.execute("""
                 INSERT INTO table_covid_world 
                 (date_rep, year_week, cases_weekly, deaths_weekly, countries_and_territories,
