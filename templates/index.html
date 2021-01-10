@@ -124,14 +124,12 @@
             <div class="col-md-7 px-5">
                 <h2 class="featurette-heading">Avances de Contagios vs Muertes: <span class="text-muted">Por Pais</span></h2>
                 <p class="lead">Grafico de linea temporal (semanal) que muestra el avance de casos de contagio\muertes total por pais.</p>
-                <div class="form-floating mb-3">
-                    <form action="{{ url_for('line_graph_per_country') }}">
-                        <input type="country" name='country' class="form-control" id="floatingInput">
-                        <label for="floatingInput">Country - Sin acentos y mayuscula la 1er letra</label>
-                    </form>
-                </div>
             </div>
             <div class="col-md-5">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput">
+                    <label for="floatingInput">Country - Sin acentos y mayuscula la 1er letra</label>
+                  </div>
                 <a href="{{ url_for('line_graph_per_country') }}">Show Graph</a>
             </div>
         </div>
